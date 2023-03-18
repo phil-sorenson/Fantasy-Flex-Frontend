@@ -1,19 +1,22 @@
 // 
 import React, { createContext, useState, useEffect } from 'react';
 
-const DataContext = createContext();
-export default DataContext
+const SleeperDataContext = createContext();
+export default SleeperDataContext
 
-export const DataContextProvider = ({children}) => {
+export const SleeperDataProvider = ({children}) => {
   
   const [userData, setUserData] = useState({});
   const [leagueData, setLeagueData] = useState({});
-  const [leagueIds, setLeagueIds] = useState([])
-  const [importedLeagues, setImportedLeagues] = useState({})
+  // const [leagueIds, setLeagueIds] = useState([])
+  const [rosterData, setRosterData] = useState([]);
+  const [leagueUsers, setLeagueUsers] = useState([])
+  
   useEffect(()=> {
     const storedUserData = JSON.parse(localStorage.getItem('userData'));
     const storedLeagueData = JSON.parse(localStorage.getItem('leagueData'));
-    const storedLeagueIds = JSON.parse(localStorage.getItem('leagueIds'));
+    const storedRosters = JSON.parse(localStorage.getItem('rosterData'));
+    const storedLeagueUsers = JSON.parse(localStorage.getItem('leagueUsers'));
     
 
     if (storedUserData) {
@@ -22,54 +25,50 @@ export const DataContextProvider = ({children}) => {
     if (storedLeagueData) {
       setLeagueData(storedLeagueData)
     }
-    if (storedLeagueIds) {
-      setLeagueIds(storedLeagueIds)
+    if (storedRosters) {
+      setRosterData(storedRosters)
+    }
+    if (storedLeagueUsers) {
+      setLeagueUsers(storedLeagueUsers)
     }
   },[])
 
   useEffect(()=> {
     localStorage.setItem('userData', JSON.stringify(userData))
     localStorage.setItem('leagueData', JSON.stringify(leagueData))
-    localStorage.setItem('leagueIds', JSON.stringify(leagueIds))
-  },[userData, leagueData, leagueIds])
+    localStorage.setItem('rosterData', JSON.stringify(rosterData))
+    localStorage.setItem('leagueUsers', JSON.stringify(leagueUsers))
+  },[userData, leagueData, rosterData, leagueUsers])
 
   return (
-    <DataContext.Provider value={{ userData, setUserData, leagueData, setLeagueData, leagueIds, setLeagueIds }}>
+    <SleeperDataContext.Provider value={{ userData, setUserData, 
+      leagueData, setLeagueData, 
+      rosterData, setRosterData,
+      leagueUsers, setLeagueUsers 
+      }}>
       {children}
-    </DataContext.Provider>
+    </SleeperDataContext.Provider>
   );
 }
 
 
 
-// import React, { createContext, useState } from "react";
-
-
-// export const SleeperContext = createContext();
-
-
-// export const UserContextProvider = ({ children }) => {
-//   // const userData = localStorage.getItem({
-//   //   username: 'username',
-//   //   userId: 'user_id',
-//   //   displayName: 'display_name',
-//   //   avatar: 'avatar'
-//   // })
-//   // const [data, setData] = useState(userData);
-//   const [sleeperData, setSleeperData] = useState({
-//     username: 'username',
-//     user_id: 'user_id',
-//     display_name: 'display_name',
-//     avatar: 'avatar'
-//   })
 
 
 
-//   return (
-//     <UserContext.Provider value={{ sleeperData, setSleeperData }}>
-//       {children}
-//     </UserContext.Provider>
-//   );
+
+// const SleeperDataProvider = (props) => {
+//   const [user, setUser] = useState(() => {
+//     const localData = localStorage.getItem("user");
+//     return localData ? JSON.parse(localData) : {};
+//   });
+
+//   const [leagues, setLeagues] = useState(() => {
+//     const localData = localStorage.getItem("leagues");
+//     return localData ? JSON.parse(localData) : [];
+//   });
+
+
 // };
 
-// export default UserContextProvider;
+// export default SleeperDataProvider;

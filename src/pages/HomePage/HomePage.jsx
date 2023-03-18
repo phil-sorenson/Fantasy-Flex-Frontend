@@ -8,6 +8,7 @@ import { useEffect, useState, useContext} from "react";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 import "./HomePage.css"
+import { Button } from "react-bootstrap";
 // import AddLeagueButton from '../../components/AddLeagueButton';
 
 
@@ -27,9 +28,10 @@ const HomePage = () => {
     }
   })
 
-  const handleAddLeagueCLick = () => {
-    navigate('/platform-select')
-  }
+  // const handleAddLeagueCLick = () => {
+    
+  //   navigate('/platform-select')
+  // }
 
   return (
     <div>
@@ -41,6 +43,7 @@ const HomePage = () => {
       </div>
       <div>
         {token ? (
+          // <Button variant='primary'onClick={()=> handleAddLeagueCLick}></Button>
           <Link to='/platform-select' className='button'>Add Leagues</Link>
          ):( <p>Must be logged-in to Add a League</p>
          )}
