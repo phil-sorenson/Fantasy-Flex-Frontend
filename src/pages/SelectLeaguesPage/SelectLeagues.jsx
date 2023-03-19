@@ -1,6 +1,6 @@
 // FixMe: League list still disappears even after setting my DataContext to localStorage --> 
   // Possible Solution: Store and parse through leagueData through this page 
-// FixMe: Initial leagueData works but when saving the selcted/imported leagues/rosters only 1 ends up saving
+// FixMe: Initial leagueData works but when saving the selected/imported leagues/rosters only 1 ends up saving
 //-ToDo: Import Leagues button leads to nothing
 //-ToDo: Render each of the user's specific {selectedLeagues} as opposed to just the rosters
 // Note: 'leagues' renders all leagues just fine, leagueData renders a singular league_ID, & rosters renders only one league's rosters
@@ -26,7 +26,7 @@ import { Form, Button, FormCheck, Container, Row, Col } from 'react-bootstrap';
 // import RosterFetcher from './GetRosters';
 
 const SelectLeagues = () => {
-  const { userData, setLeagueData, setRosterData, setLeagueUsers } = useContext(SleeperDataContext);
+  const { userData, setLeagueData, leagueData, rosterData, setRosterData, leagueUsers, setLeagueUsers } = useContext(SleeperDataContext);
   const [fetchedLeagues, setFetchedLeagues] = useState([]);
   const [selectedLeagues, setSelectedLeagues] = useState([]);
   const [rosters, setRosters] = useState([])
@@ -74,20 +74,6 @@ const SelectLeagues = () => {
     }
   };
 
-  const fetchSelectedLeagues = async (league) => {
-    try {
-      const response = await axios.get(
-        `https://api.sleeper.app/v1/league/${league.league_id}`
-        );
-      
-      setLeagueData(response.data);
-      console.log('fetched-leagues', response.data)
-      return response.data
-    } catch (error) {
-      console.error('Selected League sync Failed', error)
-    }
-  };
-
   const fetchRostersAndUsers = async (league) => {
     try {
       const rosterResponse = await axios.get(
@@ -122,17 +108,77 @@ const SelectLeagues = () => {
     }
   }
 
+  const fetchSelectedLeagues = async (league) => {
+    try {
+      const response = await axios.get(
+        `https://api.sleeper.app/v1/league/${league.league_id}`
+        );
+      console.log('fetched-leagues', response.data)
+      const additionalLeagueData = await fetchRostersAndUsers(league);
+      setLeagueData((prevLeagueData)=>[
+        ...prevLeagueData,
+        {
+          ...response.data,
+          rosters: additionalLeagueData.rosters,
+          users: additionalLeagueData.users,
+          userRoster: additionalLeagueData.userRoster
+        },
+      ]);
+      return response.data
+    } catch (error) {
+      console.error('Selected League sync Failed', error)
+    }
+  };
+
+
   const handleImportLeagues = async () => {
     const syncedLeagues = await Promise.all(
       selectedLeagues.map((league)=>fetchSelectedLeagues(league))
     );
+    // setLeagueData(syncedLeagues);
     const rosterAndUserData = await Promise.all(
       syncedLeagues.map((league)=> fetchRostersAndUsers(league))
     );
-    setRosterData(rosterAndUserData);
-    setLeagueUsers(rosterAndUserData);
-    navigate('/')
+    
+    const updatedLeagueData = [...leagueData];
+    const updatedRosterData = [...rosterData];
+    const updatedLeagueUsers = [...leagueUsers];
+  
+    rosterAndUserData.forEach((data, index) => {
+      const leagueInfo = syncedLeagues[index];
+      const existingLeagueIndex = leagueData.findIndex(
+        (league) => league.league_id === leagueInfo.league_id
+      );
+  
+    const combinedLeagueData = {
+      ...leagueInfo,
+      rosters: data.rosters,
+      users: data.users,
+      userRoster: data.userRoster,
+    };
+
+    if (existingLeagueIndex > -1) {
+      updatedLeagueData[existingLeagueIndex] = combinedLeagueData;
+      updatedRosterData[existingLeagueIndex] = data.rosters;
+      updatedLeagueUsers[existingLeagueIndex] = data.users;
+    } else {
+      updatedLeagueData.push(combinedLeagueData);
+      updatedRosterData.push(data.rosters);
+      updatedLeagueUsers.push(data.users);
+    }
+  });
+  
+    setLeagueData(updatedLeagueData);
+    setRosterData(updatedRosterData);
+    setLeagueUsers(updatedLeagueUsers);
+    navigate('/');
   };
+  //   const extractedRosterData = rosterAndUserData.map((data)=> data.rosters)
+  //   const extractedLeagueUsers = rosterAndUserData.map((data)=> data.users)
+  //   setRosterData(extractedRosterData);
+  //   setLeagueUsers(extractedLeagueUsers);
+  //   navigate('/')
+  // };
 
   return (
     <>
@@ -151,40 +197,17 @@ const SelectLeagues = () => {
           ))}
         </Row>
         <br/>
-        <Button onClick={handleImportLeagues}>Import Selected Leagues</Button>
+        <Button onClick={handleImportLeagues} disabled={selectedLeagues.length === 0}>Import Selected Leagues</Button>
       </Container>
     </>
   )
 
 
-  // return (
-  //   <>
-  //     <h4>Select Leagues to Import!</h4>
-  //     <Form>
-  //       {leagues.map((league) => (
-  //         <div key={league.league_id}>
-  //           <label>
-  //             <FormCheck
-  //               type="checkbox"
-  //               id={league.league_id}
-  //               label={league.name}
-  //               value={league.league_id}
-  //               onChange={handleLeagueSelection}
-  //               checked={selectedLeagues.includes(league.league_id)}
-  //             />
-  //           </label>
-  //         </div>
-  //       ))}
-  //       <Button variant="primary" onClick={handleImportLeagues} disabled={selectedLeagues.length === 0}>
-  //         Import Selected Leagues
-  //       </Button>
-  //     </Form>
-  //     {/* {selectedLeagues.length > 0 && <RosterFetcher leagueIds={selectedLeagues} />} */}
-  //   </>
-  // );
+
 }
 
 export default SelectLeagues;
 
 
 
+ 
