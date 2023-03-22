@@ -8,8 +8,8 @@ import { useEffect, useState, useContext} from "react";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 import "./HomePage.css"
-import { Button } from "react-bootstrap";
-// import AddLeagueButton from '../../components/AddLeagueButton';
+import { Button, Container, Row, Col } from "react-bootstrap";
+
 
 
 const HomePage = () => {
@@ -18,7 +18,7 @@ const HomePage = () => {
   const { user } = useAuth();
   // console.log('user', user.username)
   const [token, setToken] = useState('')
-  console.log('token', token)
+  // console.log('token', token)
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -28,28 +28,53 @@ const HomePage = () => {
     }
   })
 
-  // const handleAddLeagueCLick = () => {
-    
-  //   navigate('/platform-select')
-  // }
+  const handleAddLeaguesClick = () => {
+    // event.preventDefault()
+    navigate('/platform-select')
+  }
 
   return (
-    <div>
-      <div>
-          <h2>Welcome to Fantasy🏈Flex </h2>
-          <h6>Import your Fantasy Football leagues</h6>
-          <h6>Track ALL your teams in one place</h6>
-          {/* <text>Flex on your competition and win some hardware!</text> */}
-      </div>
-      <div>
-        {token ? (
-          // <Button variant='primary'onClick={()=> handleAddLeagueCLick}></Button>
-          <Link to='/platform-select' className='button'>Add Leagues</Link>
-         ):( <p>Must be logged-in to Add a League</p>
-         )}
-      </div>
-    </div>
+    
+    <div className="vh-100 d-flex align-items-start justify-content-center pt-5" style={{ backgroundColor: "#f8f9fa" }}>
+    <Container>
+      <Row className="text-center">
+        <Col>
+          <h2>Welcome to Fantasy🏈Flex</h2>
+          <h6 className="text-muted">Import your Fantasy Football leagues</h6>
+          <h6 className="text-muted">Track ALL your teams in one place</h6>
+        </Col>
+      </Row>
+      <Row className="justify-content-center mt-4">
+        <Col xs="auto">
+          {token ? (
+            <Button onClick={handleAddLeaguesClick}>Add Your Leagues</Button>
+          ) : (
+            <p>Must be logged-in to Add a League</p>
+          )}
+        </Col>
+      </Row>
+    </Container>
+  </div>
+    
+    
+    // <div>
+    //   <div className="description">
+    //       <h2>Welcome to Fantasy🏈Flex</h2>
+    //       <h6>Import your Fantasy Football leagues</h6>
+    //       <h6>Track ALL your teams in one place</h6>
+    //   </div>
+    //   <div className="add-league-btn">
+    //     {token ? (
+    //       <Button onClick={handleAddLeaguesClick}>Add Your Leagues</Button>
+    //       // <Link to='/platform-select' className='button'>Add Leagues</Link>
+    //      ):( <p>Must be logged-in to Add a League</p>
+    //      )}
+    //   </div>
+    // </div>
   );
 };
 
   export default HomePage;
+
+// Todo - Clean up Navbar to make just the Brand and logout button on top
+  // Make the league dropdown live on sidebar

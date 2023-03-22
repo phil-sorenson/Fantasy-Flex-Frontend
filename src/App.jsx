@@ -1,6 +1,6 @@
 // General Imports
-import React, { useState } from "react";
-import { Routes, Route  } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import { KEY } from "./localKey";
 import { APP_ID } from "./localKey";
@@ -17,28 +17,30 @@ import SelectLeagues from "./pages/SelectLeaguesPage/SelectLeagues";
 
 
 // Component Imports
-import Navbar from "./components/Header/NavBar";
+import Navigation from "./components/Header/NavBar";
 import Footer from "./components/Footer/Footer";
-import SideNavbar from "./components/SidebarNav/SideNavbar";
+
+// import SideNavbar from "./components/SidebarNav/SideNavbar";
 
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
-
+import SleeperDataContext from "./context/SleeperDataContext";
 import useAuth from "./hooks/useAuth";
+import LeaguePage from "./pages/LeaguePage/LeaguePage";
 
 
-// export const BASE_URL = `https://api.sleeper.app/v1/`;
-// export const DB_URL = `http://127.0.0.1:8000/api/sleeper/`;
+
 
 function App() {
   
+  const { leagueData, userData } = useContext(SleeperDataContext)
 
   return (
     <div className="App">
       <div>
       
-          <Navbar />
-          <SideNavbar />
+          <Navigation />
+          {/* <SideNavbar /> */}
               <Routes>
                 <Route
                   path='/'
@@ -53,7 +55,7 @@ function App() {
                 <Route path='/platform-select' element={<SelectPlatform/>}/>
                 <Route path='/sleeper-login' element={<SleeperLogin/>}/>
                 <Route path='/select-leagues' element={<SelectLeagues/>}/>
-
+                <Route path="/league/:leagueId" element={ <LeaguePage/> }/>
               </Routes>
             
           <Footer />

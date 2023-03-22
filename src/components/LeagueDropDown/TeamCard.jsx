@@ -1,1 +1,0 @@
-// Teamcard is where the League info will be shown => TeamName (Platform): LeagueName -- 12-Team PPR Dynasty

@@ -47,23 +47,24 @@ const SleeperLogin = () => {
 
 
   return (
-    
-    <Form onSubmit={handleLogin}>
-      <h2>Keep Track of all your Sleeper Leagues!</h2>
-      <h4>Enter your Sleeper Username to see start</h4>
-      <Form.Group className="mb-3" controlId="username">
-        <Form.Label>Sleeper Username</Form.Label>
-        <Form.Control size='sm' type="text" value={username} onChange={(e)=>setUsername(e.target.value)} placeholder="Sleeper Username" />
-        <Form.Text className="text-muted">
-          Must be Username -- Email will NOT work! 
-        </Form.Text>
-        {error && <p>error</p>}
-      </Form.Group>
-     
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-    </Form>
+    <div className="vh-100 d-flex align-items-start justify-content-center pt-5">
+      <Form onSubmit={handleLogin}>
+        <h2>Keep Track of all your Sleeper Leagues!</h2>
+        <h4>Enter your Sleeper Username to start</h4>
+        <Form.Group className="mb-3" controlId="username">
+          <Form.Label>Sleeper Username</Form.Label>
+          <Form.Control size='sm' type="text" value={username} onChange={(e)=>setUsername(e.target.value)} placeholder="Sleeper Username" />
+          <Form.Text className="text-muted">
+            Must be Username -- Email will NOT work! 
+          </Form.Text>
+          {error && <p>error</p>}
+        </Form.Group>
+      
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
+    </div>
   );
 }
 

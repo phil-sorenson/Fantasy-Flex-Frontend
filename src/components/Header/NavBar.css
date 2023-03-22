@@ -1,11 +1,39 @@
-ul {
+
+ .custom-navbar {
   display: flex;
   justify-content: space-between;
-  list-style-type: none;
+  background-color: #34495E;
+
+}
+
+/* .custom-navbar .navbar-brand {
+  margin-left: auto;
+
+} */
+
+/* The 'leagues' dropdown */
+.custom-navbar .nav-link {
+  margin-left: 15px;
+  color: azure;
+}
+
+.custom-navbar .navbar-log {
+  margin-right: 15px;
+}
+
+.custom-navbar .navbar-toggler {
+  border: none;
 }
 
 
-.navBar {
+/* ul {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+} */
+
+
+/* .navBar {
   background: steelblue;
   box-shadow: 4px 2px 5px gray;
   color: white;
@@ -25,8 +53,8 @@ ul {
   color: steelblue;
   cursor: pointer;
 }
-
-.brand {
+*/
+/* .brand {
   cursor: pointer;
-  font-size: 1.25rem;
-}
+  font-size: 2rem;
+}  */

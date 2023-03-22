@@ -23,7 +23,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SleeperDataContext from '../../context/SleeperDataContext';
 import { Form, Button, FormCheck, Container, Row, Col } from 'react-bootstrap';
-// import RosterFetcher from './GetRosters';
+import LeaguePage from '../LeaguePage/LeaguePage';
 
 const SelectLeagues = () => {
   const { userData, setLeagueData, leagueData, rosterData, setRosterData, leagueUsers, setLeagueUsers } = useContext(SleeperDataContext);
@@ -32,7 +32,7 @@ const SelectLeagues = () => {
   const [rosters, setRosters] = useState([])
   const [userRoster, setUsersRoster] = useState(null)
   const [users, setUsers] = useState([])
-  // const [leagues, setLeagues] = useState([])
+
   const navigate = useNavigate()
   //CodeLogic: Render ALL user's leagues upon new userData being passed to SelectLeaguesPage & 
    //  set those leagues to state(leagues) and context(leagueData)
@@ -42,7 +42,7 @@ const SelectLeagues = () => {
       const userId = userData.user_id;
       try {
         const response = await axios.get(
-        `https://api.sleeper.app/v1/user/${userId}/leagues/nfl/2023`
+        `https://api.sleeper.app/v1/user/${userId}/leagues/nfl/2022`
       );
       const checkedLeagues = response.data.map((league)=>({...league, isChecked: false}));
       setFetchedLeagues(checkedLeagues);
@@ -181,7 +181,7 @@ const SelectLeagues = () => {
   // };
 
   return (
-    <>
+    <div className="vh-100 d-flex align-items-start justify-content-center pt-5">
       <Container>
         <h2>Select Leagues to Sync</h2>
         <Row>
@@ -199,7 +199,7 @@ const SelectLeagues = () => {
         <br/>
         <Button onClick={handleImportLeagues} disabled={selectedLeagues.length === 0}>Import Selected Leagues</Button>
       </Container>
-    </>
+    </div>
   )
 
 

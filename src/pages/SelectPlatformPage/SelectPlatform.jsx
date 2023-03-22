@@ -3,7 +3,7 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Container, Row, Col } from "react-bootstrap";
 
 const SelectPlatform = () => {
   
@@ -14,14 +14,19 @@ const SelectPlatform = () => {
   }
 
   return (
-    <div>
-      <h2>Select Platform</h2>
-      <Button onClick={goToSleeperLogin}>Sleeper</Button>
-      
-      {/* <Link to='/mfl-login'>MFL</Link> */}
-      {/* <button onClick={()=> handlePlatformSelection('MFL')}>
-        MFL
-      </button> */}
+    <div className="vh-100 d-flex align-items-start justify-content-center pt-5">
+      <Container className="text-center">
+        <Row>
+          <Col>
+            <h2>Select Platform</h2>
+          </Col>
+        </Row>
+        <Row className="justify-content-center mt-4">
+          <Col xs="auto">
+            <Button onClick={goToSleeperLogin}>Sleeper</Button>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 };

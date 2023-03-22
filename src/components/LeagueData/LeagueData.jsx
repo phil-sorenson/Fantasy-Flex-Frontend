@@ -73,30 +73,6 @@ function SelectLeagues() {
 
   return (
     <>
-      <h4>Select Leagues to Import!</h4>
-      <Form>
-        {leagues.map((league) => (
-          <div key={league.league_id}>
-            <label>
-              <FormCheck
-                type="checkbox"
-                id={league.league_id}
-                label={league.name}
-                value={league.league_id}
-                onChange={handleLeagueSelection}
-                checked={selectedLeagues.includes(league.league_id)}
-              />
-            </label>
-          </div>
-        ))}
-        <Button variant="primary" onClick={handleImportLeagues} disabled={selectedLeagues.length === 0}>
-          Import Selected Leagues
-        </Button>
-      </Form>
-      {selectedLeagues.length > 0 && <RosterFetcher leagueIds={selectedLeagues} />}
-      {loading && <p>Loading league data...</p>}
-      {error && <p>Trouble loading...</p>   }
-      {!loading && !error && selectedLeagueData && (
     <div>
       <h5>League Info: {selectedLeagueData.name}</h5>
       <p>Commissioner: {selectedLeagueData.settings.commissioner_type === 'user' ? selectedLeagueData.settings.commissioner_id : 'Unknown'}</p>
@@ -133,8 +109,7 @@ function SelectLeagues() {
         </ol>
       )}
     </div>
-  )}
-</>
+  </>
    );
 }
 export default SelectLeagues;

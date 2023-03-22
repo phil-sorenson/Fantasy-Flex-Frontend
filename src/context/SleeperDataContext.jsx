@@ -12,7 +12,7 @@ export const SleeperDataProvider = ({ children }) => {
   const [userData, setUserData] = useLocalStorage('userData', {});
   const [leagueData, setLeagueData] = useLocalStorage('leagueData', []);
   const [rosterData, setRosterData] = useLocalStorage('rosterData', []);
-  const [usersRosters, setUsersRosters] = useLocalStorage('usersRosters', [])
+  const [userRoster, setUserRoster] = useLocalStorage('usersRosters', [])
   const [leagueUsers, setLeagueUsers] = useLocalStorage('leagueUsers', []);
 
   return (
@@ -24,8 +24,8 @@ export const SleeperDataProvider = ({ children }) => {
         setLeagueData,
         rosterData,
         setRosterData,
-        usersRosters,
-        setUsersRosters,
+        userRoster,
+        setUserRoster,
         leagueUsers,
         setLeagueUsers,
       }}

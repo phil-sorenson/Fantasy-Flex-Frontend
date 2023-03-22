@@ -1,1 +1,0 @@
-// In any given league, users, rosters, weekly matchups, upcoming draft date/time (if one is scheduled), *user's rosters, 
