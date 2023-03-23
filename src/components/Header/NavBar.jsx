@@ -2,25 +2,28 @@ import React from "react";
 import { useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
-import {SideBarData} from './NavbarData'
 import  SleeperDataContext  from "../../context/SleeperDataContext";
+import CurrentLeagueContext from "../../context/CurrentLeagueContext";
 // react-icons & bootstrap Imports
 import * as FaIcons from 'react-icons/fa'
 import * as AiIcons from 'react-icons/ai'
+import * as MdIcons from 'react-icons/md'
 import { IconContext } from 'react-icons'
 import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
-
 // Styles Imports
 import './NavBar.css';
+
 
 const Navigation = () => {
   const { logoutUser, user } = useContext(AuthContext);
   const navigate = useNavigate();
   const {leagueData, leagueUsers, rosterData, usersRoster, userData} = useContext(SleeperDataContext)
+  const {setCurrentLeague} = useContext(CurrentLeagueContext);
   
   
-  
-  
+  const handleLeagueClick = (league) => {
+    setCurrentLeague(league);
+  }
   
   return (
 
@@ -28,16 +31,21 @@ const Navigation = () => {
       <Nav className="mr-auto">
         <NavDropdown title="Leagues" id="basic-nav-dropdown">
           {leagueData.map((league) => (
-            <NavDropdown.Item as={Link} key={league.league_id} to={`/league/${league.league_id}`}>
+            <NavDropdown.Item 
+              as={Link} 
+              key={league.league_id} 
+              to={`/league/${league.league_id}`} 
+              onClick={()=> handleLeagueClick(league)}
+            >
               {league.name}
             </NavDropdown.Item>
           ))}
         </NavDropdown>
       </Nav>
       <Navbar.Brand className="mx-auto">
-        <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-          <h3><b>Fantasy🏈Flex</b></h3>
-          <h6><b>Multi-League Tracker</b></h6>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <h3><b>Fantasy<MdIcons.MdOutlineSportsFootball/>Flex</b></h3>
+          <h6>Multi-League Tracker</h6>
         </Link>
       </Navbar.Brand>
       <Nav className="navbar-log">

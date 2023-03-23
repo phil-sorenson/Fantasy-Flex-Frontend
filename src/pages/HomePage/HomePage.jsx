@@ -9,8 +9,8 @@ import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 import "./HomePage.css"
 import { Button, Container, Row, Col } from "react-bootstrap";
-
-
+import NavbarData from "../../components/Header/NavbarData";
+import * as MdIcons from 'react-icons/md'
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -39,7 +39,7 @@ const HomePage = () => {
     <Container>
       <Row className="text-center">
         <Col>
-          <h2>Welcome to Fantasy🏈Flex</h2>
+          <h2>Welcome to Fantasy<MdIcons.MdOutlineSportsFootball/>Flex</h2>
           <h6 className="text-muted">Import your Fantasy Football leagues</h6>
           <h6 className="text-muted">Track ALL your teams in one place</h6>
         </Col>

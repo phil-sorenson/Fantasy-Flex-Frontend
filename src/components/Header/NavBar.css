@@ -2,21 +2,34 @@
  .custom-navbar {
   display: flex;
   justify-content: space-between;
-  background-color: #34495E;
-
+  background-color: #112D32;
+  color: #FEFFFF;
 }
 
-/* .custom-navbar .navbar-brand {
-  margin-left: auto;
+/* anchor/Link-- The Brand */
+a {
+  color: #FEFFFF;
+}
 
-} */
+a:hover {
+  color: #88BDBC;
+}
 
-/* The 'leagues' dropdown */
+
+/* 'leagues' dropdown */
 .custom-navbar .nav-link {
   margin-left: 15px;
-  color: azure;
+  color: #FEFFFF;
+}
+.custom-navbar .nav-link:hover { 
+  color: #88BDBC;
 }
 
+.navbar-nav .show>.nav-link{
+  color: #88BDBC;
+}
+
+/* Login/out button */
 .custom-navbar .navbar-log {
   margin-right: 15px;
 }

@@ -7,7 +7,7 @@ import * as MdIcons from 'react-icons/md'
 import * as RiIcons from 'react-icons/ri'
 
 
-export const SideBarData = [
+export const NavbarData = [
   {
     title: 'Leagues',
     path: '/league-page',
@@ -33,3 +33,4 @@ export const SideBarData = [
     className: 'nav-text'
   },
 ]
+export default NavbarData;
