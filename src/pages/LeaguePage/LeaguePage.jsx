@@ -10,22 +10,23 @@ import TrendingPlayersTab from '../../components/LeaguePageTabs/TrendingPlayersT
 import TeamTab from '../../components/LeaguePageTabs/TeamTab';
 import LeagueTab from '../../components/LeaguePageTabs/LeagueTab';
 // Bootstrap & React-icons Imports
-import { Form, Button, ButtonGroup, Container, Row, Col, Card } from 'react-bootstrap';
+import { Form, Button, ButtonGroup, Container, Row, Col, Card, Image } from 'react-bootstrap';
 
 
 const LeaguePage = () => {
   const { leagueId } = useParams()
-  const { leagueData, userData, leagueUsers, userRoster, rosterData } = useContext(SleeperDataContext);
+  const { leagueData, userData, leagueUsers, rosterData } = useContext(SleeperDataContext);
   const { currentLeague } = useContext(CurrentLeagueContext)
  
   const [activeTab, setActiveTab] = useState('team');
-  const [selectedLeague, setSelectedLeague] = useState(null)
+  const [selectedLeague, setSelectedLeague] = useState({})
   
   
   useEffect(()=> {
     if (currentLeague && currentLeague.league_id === leagueId) {
       setSelectedLeague(currentLeague);
       console.log('currentLeague', currentLeague)
+      console.log('userRoster', currentLeague.userRoster)
     } else {
       const foundLeague = leagueData.find((league) => league.league_id === leagueId);
       setSelectedLeague(foundLeague);
@@ -40,9 +41,13 @@ const LeaguePage = () => {
   if (!selectedLeague) return null;
   
   const renderTabContent = () => {
-    switch(activeTab) {
+    switch (activeTab) {
       case 'team':
-        return <TeamTab currentLeague={selectedLeague}/>;
+        return selectedLeague.userRoster && selectedLeague.userRoster.starters ? (
+          <TeamTab currentLeague={selectedLeague} userRoster={selectedLeague.userRoster} />
+          ) : (
+            <p>Loading Your Roster...</p>
+          );
       case 'league':
         return <LeagueTab currentLeague={selectedLeague}/>;
       case 'transactions':
@@ -60,6 +65,10 @@ const LeaguePage = () => {
       <Container fluid>
         <Row className="mt-4">
           <Col>
+          <Image src={`https://sleepercdn.com/avatars/thumbs/${selectedLeague.avatar}`}
+          roundedCircle
+          className="mr-2"
+          />
             <h1>{selectedLeague.name}</h1>
           </Col>
         </Row>
@@ -73,10 +82,11 @@ const LeaguePage = () => {
             </ButtonGroup>
           </Col>
         </Row>
+        {/* When a button/tab is clicked => this is what calls it -- Any Style changes to the rendered card should be done below */}
         <Row className="mt-3">
           <Col>
-            <Card>
-              <Card.Body>{renderTabContent()}</Card.Body>
+            <Card style={{maxWidth: '75%'}} className='mx-auto mb-5' >
+              <Card.Body className='overflow-auto' style={{maxHeight: '70vh'}}>{renderTabContent()}</Card.Body>
             </Card>
           </Col>
         </Row>
