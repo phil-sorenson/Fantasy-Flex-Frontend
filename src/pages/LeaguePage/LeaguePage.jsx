@@ -9,6 +9,7 @@ import LeagueTransactionsTab from '../../components/LeaguePageTabs/LeagueTransac
 import TrendingPlayersTab from '../../components/LeaguePageTabs/TrendingPlayersTab';
 import TeamTab from '../../components/LeaguePageTabs/TeamTab';
 import LeagueTab from '../../components/LeaguePageTabs/LeagueTab';
+import LeagueMatchupsTab from '../../components/LeaguePageTabs/LeagueMatchupsTab';
 // Bootstrap & React-icons Imports
 import { Form, Button, ButtonGroup, Container, Row, Col, Card, Image } from 'react-bootstrap';
 
@@ -54,6 +55,8 @@ const LeaguePage = () => {
         return <LeagueTransactionsTab currentLeague={selectedLeague}/>;
       case 'trending':
         return <TrendingPlayersTab currentLeague={selectedLeague}/>;
+      case 'matchups':
+        return <LeagueMatchupsTab leagueId={leagueId} leagueUsers={leagueUsers} allRosters={currentLeague ? currentLeague.rosters : []}/>;
       default:
         return <TeamTab currentLeague={selectedLeague}/>;
     }
@@ -79,6 +82,7 @@ const LeaguePage = () => {
               <Button variant="primary" onClick={() => setActiveTab('league')}>League</Button>
               <Button variant="primary" onClick={() => setActiveTab('transactions')}>League Transactions</Button>
               <Button variant="primary" onClick={() => setActiveTab('trending')}>Trending Players</Button>
+              <Button variant="primary" onClick={() => setActiveTab('matchups')}>Matchups</Button>
             </ButtonGroup>
           </Col>
         </Row>
