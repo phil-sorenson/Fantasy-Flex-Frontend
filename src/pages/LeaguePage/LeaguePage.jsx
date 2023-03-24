@@ -5,7 +5,7 @@ import axios from 'axios';
 import SleeperDataContext from '../../context/SleeperDataContext';
 import CurrentLeagueContext from '../../context/CurrentLeagueContext';
 // import SelectLeagues from '../SelectLeaguesPage/SelectLeagues';
-import LeagueTransactions from '../../components/Platforms/Sleeper/LeagueTransactions/LeagueTransactions';
+import LeagueTransactionsTab from '../../components/LeaguePageTabs/LeagueTransactionsTab';
 import TrendingPlayersTab from '../../components/LeaguePageTabs/TrendingPlayersTab';
 import TeamTab from '../../components/LeaguePageTabs/TeamTab';
 import LeagueTab from '../../components/LeaguePageTabs/LeagueTab';
@@ -51,7 +51,7 @@ const LeaguePage = () => {
       case 'league':
         return <LeagueTab currentLeague={selectedLeague}/>;
       case 'transactions':
-        return <LeagueTransactions currentLeague={selectedLeague}/>;
+        return <LeagueTransactionsTab currentLeague={selectedLeague}/>;
       case 'trending':
         return <TrendingPlayersTab currentLeague={selectedLeague}/>;
       default:

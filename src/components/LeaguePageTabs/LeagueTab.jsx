@@ -1,31 +1,29 @@
 
-// LeagueTab.js
+// LeagueTab.jsx
+  // This tab Shows all leagueUsers, specific league settings, and scoring_settings
+  // users will can click on a specific leagueUser and see their entire roster
 import React, {useState} from 'react';
-import { ListGroup, Card , Image} from 'react-bootstrap';
+import { ListGroup, Card , Image, Modal, Button, Accordion} from 'react-bootstrap';
+import LeagueUserRoster from '../LeagueData/LeagueUserRoster';
+
 
 const LeagueTab = ({ currentLeague }) => {
   const { users, settings, scoring_settings } = currentLeague;
   const [selectedUserRoster, setSelectedUserRoster] = useState(null);
-  const [players, setPlayers] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [showModal, setShowModal] = useState(null);
 
-
+  const handleClose = () => {
+    setShowModal(false);
+    setSelectedUserRoster(null)
+  }
   const fetchLeagueUserRoster = (userId) => {
-    const selectedUser = currentLeague.rosters.find((roster)=> roster.owner_id === userId);
-    setSelectedUserRoster(selectedUser)
+    const selectedUser = users.find((user)=> user.user_id === userId)
+    const selectedUserRoster = currentLeague.rosters.find((roster)=> roster.owner_id === userId);
+    setSelectedUserRoster(selectedUserRoster)
+    setSelectedUser(selectedUser)
+    setShowModal(true);
   }
-  
-  const renderPlayerDetails = (playerId) => {
-    const player = players[playerId];
-    return player ? `${player.position} - ${player.first_name} ${player.last_name} ${player.team}` : `Unknown Player`
-  }
-  const renderNonStarters = () => {
-    if (!selectedUserRoster) return null;
-    return selectedUserRoster.players.filter((playerId)=> !selectedUserRoster.starters.includes(playerId)).map((playerId, index)=>(
-      <ListGroup.Item key={index}>
-        {index +1}. {renderPlayerDetails(playerId)}
-      </ListGroup.Item>
-    ));
-  };
   
   
   return (
@@ -36,7 +34,7 @@ const LeagueTab = ({ currentLeague }) => {
         </Card.Header>
         <ListGroup variant="flush">
           {users.map((user, index) => (
-            <ListGroup.Item key={index} className='league-users' onClick={()=> fetchLeagueUserRoster(user.user_id)}>
+            <ListGroup.Item key={index} className='league-users clickable' onClick={()=> fetchLeagueUserRoster(user.user_id)}>
               <Image src={`https://sleepercdn.com/avatars/thumbs/${user.avatar}`}
                 roundedCircle
                 className="mr-6"
@@ -49,29 +47,7 @@ const LeagueTab = ({ currentLeague }) => {
           ))}
         </ListGroup>
       </Card>
-        {/* START OF LEAGUEUSER ROSTER CODE */}
-      {selectedUserRoster && (
-        <div>
-          <h3>
-            {currentLeague.leagueUsers.find((user) => user.user_id === selectedUserRoster.owner_id).display_name}
-            's Roster
-          </h3>
-          <ListGroup>
-            {selectedUserRoster.players.map((playerId, index) => (
-              <ListGroup.Item key={index}>
-                {index + 1}. {renderPlayerDetails(playerId)}
-              </ListGroup.Item>
-            ))}
-            <Card>
-              <Card.Header>
-                    <h2>Non-Starters</h2>
-              </Card.Header>
-              <ListGroup variant="flush">{renderNonStarters()}</ListGroup>
-            </Card>
-          </ListGroup>
-        </div>
-      )}
-              {/* END OF LEAGUEUSER ROSTER CODE */}
+
       <Card className="mb-3">
         <Card.Header>
           <h2>League Settings</h2>
@@ -96,6 +72,23 @@ const LeagueTab = ({ currentLeague }) => {
           ))}
         </ListGroup>
       </Card>
+      {/* render any LeagueUser's roster modal */}
+      <Modal show={showModal} onHide={handleClose} size='sm' style={{maxHeight: '80vh'}}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <b>{selectedUser ? (selectedUser.display_name || selectedUser.username) : '' }'s Roster</b>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <LeagueUserRoster selectedUserRoster={selectedUserRoster}/>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      
     </div>
   );
 };

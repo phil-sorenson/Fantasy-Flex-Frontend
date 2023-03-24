@@ -7,7 +7,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState, useContext} from "react";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
-import "./HomePage.css"
+// import "./HomePage.css"
 import { Button, Container, Row, Col } from "react-bootstrap";
 import NavbarData from "../../components/Header/NavbarData";
 import * as MdIcons from 'react-icons/md'
@@ -35,7 +35,7 @@ const HomePage = () => {
 
   return (
     
-    <div className="vh-100 d-flex align-items-start justify-content-center pt-5" style={{ backgroundColor: "#f8f9fa" }}>
+    <div className="vh-100 d-flex align-items-start justify-content-center pt-5" >
     <Container>
       <Row className="text-center">
         <Col>
@@ -56,25 +56,10 @@ const HomePage = () => {
     </Container>
   </div>
     
-    
-    // <div>
-    //   <div className="description">
-    //       <h2>Welcome to Fantasy🏈Flex</h2>
-    //       <h6>Import your Fantasy Football leagues</h6>
-    //       <h6>Track ALL your teams in one place</h6>
-    //   </div>
-    //   <div className="add-league-btn">
-    //     {token ? (
-    //       <Button onClick={handleAddLeaguesClick}>Add Your Leagues</Button>
-    //       // <Link to='/platform-select' className='button'>Add Leagues</Link>
-    //      ):( <p>Must be logged-in to Add a League</p>
-    //      )}
-    //   </div>
-    // </div>
+
   );
 };
 
   export default HomePage;
 
-// Todo - Clean up Navbar to make just the Brand and logout button on top
-  // Make the league dropdown live on sidebar
+
