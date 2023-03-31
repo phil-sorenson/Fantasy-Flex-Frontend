@@ -5,7 +5,7 @@ import axios from 'axios';
 import { ListGroup, Card, Container, Row, Col} from 'react-bootstrap';
 import CurrentLeagueContext from '../../context/CurrentLeagueContext'; 
 
-const TeamTab = ({userRoster}) => {
+const TeamTab = ({ userRoster }) => {
   // const { currentLeague } = useContext(CurrentLeagueContext);
   // const userRoster = currentLeague.userRoster ? currentLeague.userRoster : null;
   // console.log('team tab userRoster', currentLeague.userRoster)
@@ -47,6 +47,7 @@ const TeamTab = ({userRoster}) => {
     const player = players[playerId];
     return player ? `${player.position} - ${player.first_name} ${player.last_name} ${player.team}` : `Unknown Player`
   }
+  
   const nonStarters = userRoster.players.filter(playerId => !userRoster.starters.includes(playerId));
   
   return (
@@ -54,7 +55,7 @@ const TeamTab = ({userRoster}) => {
       
         <Card>
           <Card.Header>
-            <h2>Your Roster</h2>
+            <h2> Roster</h2>
           </Card.Header>
           <ListGroup variant="flush">
             <Card.Title className='m-3'><b>Starters</b></Card.Title>

@@ -3,9 +3,9 @@
   // This tab Shows all leagueUsers, specific league settings, and scoring_settings
   // users will can click on a specific leagueUser and see their entire roster
 import React, {useState} from 'react';
-import { ListGroup, Card , Image, Modal, Button, Accordion} from 'react-bootstrap';
+import { ListGroup, Card , Image, Modal, Button, Table} from 'react-bootstrap';
 import LeagueUserRoster from '../LeagueData/LeagueUserRoster';
-
+import ScoringSettings from '../LeagueData/ScoringSettings';
 
 const LeagueTab = ({ currentLeague }) => {
   const { users, settings, scoring_settings } = currentLeague;
@@ -17,6 +17,7 @@ const LeagueTab = ({ currentLeague }) => {
     setShowModal(false);
     setSelectedUserRoster(null)
   }
+
   const fetchLeagueUserRoster = (userId) => {
     const selectedUser = users.find((user)=> user.user_id === userId)
     const selectedUserRoster = currentLeague.rosters.find((roster)=> roster.owner_id === userId);
@@ -25,6 +26,7 @@ const LeagueTab = ({ currentLeague }) => {
     setShowModal(true);
   }
   
+
   
   return (
     <div>
@@ -58,20 +60,23 @@ const LeagueTab = ({ currentLeague }) => {
           <ListGroup.Item>Trade deadline: Week {settings.trade_deadline}</ListGroup.Item>
         </ListGroup>
       </Card>
-
-      <Card>
+      <ScoringSettings scoring_settings={currentLeague.scoring_settings}/>
+      {/* <Card>
         <Card.Header>
           <h2>Scoring Settings</h2>
+               Future => Implement 'nonStandard' scoring type being hi lighted 
         </Card.Header>
-        <ListGroup variant="flush">
-          {Object.entries(scoring_settings).map(([key, value]) => (
-            <ListGroup.Item key={key}>
-              {key}: {value}
-              {/* Edit how this looks -- Want to render specific items instead of everything */}
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
-      </Card>
+          <ListGroup variant="flush">
+            {Object.entries(scoring_settings).map(([key, value]) => (
+               CodeLogic => 'key' & 'value' are inside of square [] because 'Object.entries()' returns an array of key-value pairs, where each pair is an array containing two elements: the 'key' & 'value' By using [] in the arrow functions parameter list, we're destructing the array returned by 'Object.entires()' directly into two separate variables 'key' & 'value'   
+              <ListGroup.Item key={key}>
+                {key}: {value}
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+      </Card>  */}
+
+
       {/* render any LeagueUser's roster modal */}
       <Modal show={showModal} onHide={handleClose} size='sm' style={{maxHeight: '80vh'}}>
         <Modal.Header closeButton>
